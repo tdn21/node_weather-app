@@ -56,16 +56,29 @@ app.get('/weather', (req, res) => {
                 return res.send({ err })
             }
             
-            forecast (latitude , longitude , (err, {daily, currently} = {}) => {             //destructured data object to its two properties
+            // forecast (latitude , longitude , (err, {daily, currently} = {}) => {             //destructured data object to its two properties
+            //     if(err){
+            //         return res.send({ err })
+            //     }
+        
+            //     console.log(location)
+
+            //     res.send({location : location,
+            //             summary : daily.summary,
+            //         temperature : currently.temperature
+            //     })
+            // })
+            forecast (latitude , longitude , (err, data) => {             //destructured data object to its two properties
                 if(err){
                     return res.send({ err })
                 }
         
                 console.log(location)
+                console.log(data)
 
                 res.send({location : location,
-                        summary : daily.summary,
-                    temperature : currently.temperature
+                        summary : data.daily.summary,
+                    temperature : data.currently.temperature
                 })
             })
         })
@@ -73,23 +86,10 @@ app.get('/weather', (req, res) => {
 
 })
 
-app.get('/products', (req, res) => {
-    if (!req.query.search) {
-        return res.send({
-            error: 'You must provide a search term'
-        })
-    }
-
-    console.log(req.query.search)
-    res.send({
-        products: []
-    })
-})
-
 app.get('/help/*', (req, res) => {
     res.render('404', {
         title: '404',
-        name: 'Andrew Mead',
+        name: 'Tarun Duhan',
         errorMessage: 'Help article not found.'
     })
 })
@@ -97,7 +97,7 @@ app.get('/help/*', (req, res) => {
 app.get('*', (req, res) => {
     res.render('404', {
         title: '404',
-        name: 'Andrew Mead',
+        name: 'Tarun Duhan',
         errorMessage: 'Page not found.'
     })
 })
